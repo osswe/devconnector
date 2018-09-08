@@ -1,12 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const bodyParser = require('body-parser');
 const app = express();
 const db = require('./config/keys').mongoURI;
 //route definition
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
+
+// body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // connect to mongo db through mongoose
 mongoose
