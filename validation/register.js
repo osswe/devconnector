@@ -1,4 +1,4 @@
-const Validator = require('validator');
+const validator = require('validator');
 //import isEmpty from './is-empty';
 const isEmpty = require('./is-empty');
 
