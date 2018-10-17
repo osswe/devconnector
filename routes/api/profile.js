@@ -170,9 +170,16 @@ router.post(
 // @access Private
 router.post(
   '/experience',
-  passport.authenticate('jwt', { session: false }, (req, res) => {
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateExperienceInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     Profile.findOne({ user: req.user.id }).then(profile => {
-      const newExpt = {
+      const newExp = {
         title: req.body.title,
         company: req.body.company,
         location: req.body.location,
@@ -186,7 +193,7 @@ router.post(
 
       profile.save().then(profile => res.json(profile));
     });
-  }),
+  },
 );
 
 // @route POST api/profile/experience
