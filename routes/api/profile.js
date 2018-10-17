@@ -183,8 +183,8 @@ router.post(
         title: req.body.title,
         company: req.body.company,
         location: req.body.location,
-        from: req.body.from,
-        to: req.body.to,
+        fromDate: req.body.fromDate,
+        toDate: req.body.toDate,
         current: req.body.current,
         description: req.body.description,
       };
@@ -214,8 +214,8 @@ router.post(
         title: req.body.title,
         company: req.body.company,
         location: req.body.location,
-        fromDate: req.body.from,
-        toDate: req.body.to,
+        fromDate: req.body.fromDate,
+        toDate: req.body.toDate,
         currentlyEmployed: req.body.current,
         description: req.body.description,
       };

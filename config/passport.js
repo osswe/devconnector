@@ -13,7 +13,7 @@ opts.secretOrKey = keys.jwtSecret;
 module.exports = passport => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
-      console.log('payload:', jwt_payload);
+      //console.log('payload:', jwt_payload);
       User.findById(jwt_payload.id)
         .then(user => {
           if (user) {
