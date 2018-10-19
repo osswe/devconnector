@@ -165,36 +165,7 @@ router.post(
   },
 );
 
-// @route POST api/profile/experience
-// @desc Add experience to profile
-// @access Private
-router.post(
-  '/experience',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const { errors, isValid } = validateExperienceInput(req.body);
 
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
-    Profile.findOne({ user: req.user.id }).then(profile => {
-      const newExp = {
-        title: req.body.title,
-        company: req.body.company,
-        location: req.body.location,
-        fromDate: req.body.fromDate,
-        toDate: req.body.toDate,
-        current: req.body.current,
-        description: req.body.description,
-      };
-
-      profile.experience.unshift(newExp);
-
-      profile.save().then(profile => res.json(profile));
-    });
-  },
-);
 
 // @route POST api/profile/experience
 // @desc Add experience to profile
