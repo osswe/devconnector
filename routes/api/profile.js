@@ -5,7 +5,7 @@ const passport = require('passport');
 
 const validateProfileInput = require('../../validation/profile');
 const validateExperienceInput = require('../../validation/experience');
-
+const validateEducationInput = require('../../validation/education');
 //this url is relative to the route that was defined to get here, i.e. the app use having '/api/users' to make
 // this full url /api/users/test
 
@@ -165,8 +165,6 @@ router.post(
   },
 );
 
-
-
 // @route POST api/profile/experience
 // @desc Add experience to profile
 // @access Private
@@ -193,6 +191,42 @@ router.post(
 
       // add to experience array
       profile.experience.unshift(newExp);
+
+      // save profile
+      profile.save().then(profile => {
+        res.json(profile);
+      });
+    });
+  },
+);
+
+// @route POST api/profile/education
+// @desc Add education to profile
+// @access Private
+router.post(
+  '/education',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateEducationInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const newEdu = {
+        title: req.body.title,
+        school: req.body.school,
+        degree: req.body.degree,
+        fieldOfStudy: req.body.fieldOfStudy,
+        fromDate: req.body.fromDate,
+        toDate: req.body.toDate,
+        currentlyEmployed: req.body.current,
+        description: req.body.description,
+      };
+
+      // add to education array
+      profile.education.unshift(newEdu);
 
       // save profile
       profile.save().then(profile => {
